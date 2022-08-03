@@ -6,9 +6,6 @@ class CommentController {
         res.send();
     }
 
-    // static find(req, res) {
-
-    // }
 
     static create(req: Request, res: Response) {
         if (!req.body.comment) {
@@ -29,14 +26,6 @@ class CommentController {
         comments.push(req.body.comment);
         res.status(201).send();
     }
-
-    // static update( ) { 
-
-    // }
-
-    // static remove() {
-        
-    // }
 }
 
 export default CommentController;

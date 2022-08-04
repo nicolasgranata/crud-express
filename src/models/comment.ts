@@ -5,4 +5,4 @@ interface Comment {
     articleId: string,
 }
 
-export { Comment };
+export default Comment;

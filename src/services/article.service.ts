@@ -14,7 +14,7 @@ class ArticleService {
     }
 
     update(id: string, article: Article) {
-        return ArticleModel.findByIdAndUpdate(id, article).lean().exec();
+        return ArticleModel.findByIdAndUpdate(id, article, {new: true}).lean().exec();
     }
 
     remove(id: string) {

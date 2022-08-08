@@ -3,7 +3,7 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import Routes from './routes';
-import errorHandler from './middlewares/errorHandler';
+import errorHandler from './middlewares/errorhandler';
 
 const app = express();
 

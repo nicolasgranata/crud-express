@@ -3,6 +3,7 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import Routes from './routes';
+import errorHandler from './middlewares/errorHandler';
 
 const app = express();
 
@@ -10,6 +11,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 
 Routes.configure(app);
+
+app.use(errorHandler);
 
 const start = async () => {
     await mongoose.connect('mongodb://localhost');

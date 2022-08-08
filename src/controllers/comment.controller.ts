@@ -1,27 +1,51 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { CommentService } from '../services';
 
 export default class CommentController {
-    static fetch(req: Request, res: Response) {
-        res.send();
+    constructor(private readonly commentService: CommentService) { }
+
+    public async fetch(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { article } = req.query; 
+            res.send(await this.commentService.fetch(article?.toString() ?? ''));
+        } catch (error) {
+            next(error);
+        }
     }
 
-    static create(req: Request, res: Response) {
-        if (!req.body.comment) {
-            res.status(400).send('No comment provided');
-            return;
+    public async create(req: Request, res: Response, next: NextFunction) {
+        if (!req) {
+            return res.status(400).send('Comment is empty');
+
         }
+        const comment = req.body;
 
-        // const article = articles.find(article => article.id === req.body.comment.articleId);
+        try {
+            await this.commentService.create(comment);
+            res.status(201).send();
+        } catch (error) {
+            next(error);
+        }
+    }
 
-        // if (!article) {
-        //     res.status(400).send('Article does not exist');
-        //     return;
-        // }
+    public async update(req: Request, res: Response, next: NextFunction) {
+        try {
+            const result = await this.commentService.update(req.params.id, req.body);
+            if (!result) {
+                return res.status(404).send('Comment not found');
+            }
+            res.send(result);
+        } catch (error) {
+            next(error);
+        }
+    }
 
-        // // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        // const {articleId, ...comment} = req.body.comment;
-        // comment.article = article.id;
-        // comments.push(req.body.comment);
-        res.status(201).send();
+    public async delete(req: Request, res: Response, next: NextFunction) {
+        try {
+            await this.commentService.remove(req.params.id);
+            res.status(204).send();
+        } catch (error) {
+            next(error);
+        }
     }
 }

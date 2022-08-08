@@ -16,6 +16,10 @@ class CommentService {
     remove(id: string) {
         return CommentModel.findByIdAndRemove(id).lean().exec();
     }
+
+    removeCommentsByArticle(articleId: string){
+        return CommentModel.remove({'articleId': articleId}).lean().exec();
+    }
 }
 
 export default CommentService;

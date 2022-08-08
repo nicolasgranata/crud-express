@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { ArticleService } from '../services';
+import { ArticleService, CommentService } from '../services';
 
 export default class ArticleController {
-    constructor(private readonly articleService: ArticleService) { }
+    constructor(private readonly articleService: ArticleService,
+        private readonly commentService: CommentService) { }
 
     public async fetch(_req: Request, res: Response, next: NextFunction) {
         try {
@@ -29,9 +30,8 @@ export default class ArticleController {
             return res.status(400).send('Article is empty');
 
         }
-        const article = req.body;
-
         try {
+            const article = req.body;
             await this.articleService.create(article);
             res.status(201).send();
         } catch (error) {
@@ -53,7 +53,9 @@ export default class ArticleController {
 
     public async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            await this.articleService.remove(req.params.id);
+            const articleId = req.params.id;
+            await this.articleService.remove(articleId);
+            await this.commentService.removeCommentsByArticle(articleId);
             res.status(204).send();
         } catch (error) {
             next(error);

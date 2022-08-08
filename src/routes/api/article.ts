@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { ArticleController } from '../../controllers';
-import { ArticleService } from '../../services';
+import { ArticleService, CommentService } from '../../services';
 
 const articlesApi = (router: Router) => {
-    const ac = new ArticleController(new ArticleService());
+    const ac = new ArticleController(new ArticleService(), new CommentService());
     router.get('/', ac.fetch.bind(ac));
     router.post('/', ac.create.bind(ac));
     router.get('/:id', ac.find.bind(ac));

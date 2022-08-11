@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 
 interface Article {
+    _id: string,
     title: string,
     body: string,
     author: string

@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 
 interface Comment {
+    _id: string,
     articleId: string,
     author: string,
     body: string,

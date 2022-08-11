@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { Article } from '../models';
 import { ArticleService, CommentService } from '../services';
 
 export default class ArticleController {
@@ -26,9 +27,8 @@ export default class ArticleController {
     }
 
     public async create(req: Request, res: Response, next: NextFunction) {
-        if (!req) {
+        if (Object.keys(req.body).length === 0 || !req.body) {
             return res.status(400).send('Article is empty');
-
         }
         try {
             const article = req.body;

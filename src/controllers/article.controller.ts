@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { Article } from '../models';
 import { ArticleService, CommentService } from '../services';
 
 export default class ArticleController {

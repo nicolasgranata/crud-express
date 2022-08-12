@@ -3,4 +3,9 @@ export default {
     testEnvironment: 'node',
     clearMocks: true,
     coverageProvider: 'v8',
+    globals: {
+        'ts-jest': {
+            isolatedModules: true
+        }
+    }
 };

@@ -14,9 +14,8 @@ export default class CommentController {
     }
 
     public async create(req: Request, res: Response, next: NextFunction) {
-        if (!req) {
+        if (!req || Object.keys(req.body).length === 0) {
             return res.status(400).send('Comment is empty');
-
         }
         try {
             const comment = req.body;

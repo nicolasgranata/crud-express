@@ -30,9 +30,8 @@ export default class ArticleController {
             return res.status(400).send('Article is empty');
         }
         try {
-            const article = req.body;
-            await this.articleService.create(article);
-            res.status(201).send();
+            const result = await this.articleService.create(req.body);
+            res.status(201).send(result);
         } catch (error) {
             next(error);
         }

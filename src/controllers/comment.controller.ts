@@ -18,9 +18,8 @@ export default class CommentController {
             return res.status(400).send('Comment is empty');
         }
         try {
-            const comment = req.body;
-            await this.commentService.create(comment);
-            res.status(201).send();
+            const result = await this.commentService.create(req.body);
+            res.status(201).send(result);
         } catch (error) {
             next(error);
         }

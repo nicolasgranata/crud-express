@@ -1,23 +1,23 @@
 import { Comment, CommentModel } from '../models';
 
 class CommentService {
-    fetch(articleId: string) {
+    fetch(articleId: string): Promise<Comment[]> {
         return CommentModel.find({'articleId': articleId}).lean().exec();
     }
 
-    create(comment: Comment) {
+    create(comment: Comment): Promise<Comment> {
         return CommentModel.create(comment);
     }
 
-    update(id: string, comment: Comment) {
+    update(id: string, comment: Comment): Promise<Comment | null> {
         return CommentModel.findByIdAndUpdate(id, comment, {new: true}).lean().exec();
     }
 
-    remove(id: string) {
+    remove(id: string): Promise<Comment | null> {
         return CommentModel.findByIdAndRemove(id).lean().exec();
     }
 
-    removeCommentsByArticle(articleId: string){
+    removeCommentsByArticle(articleId: string): Promise<Comment[] | null> {
         return CommentModel.remove({'articleId': articleId}).lean().exec();
     }
 }
